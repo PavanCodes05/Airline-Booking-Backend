@@ -16,6 +16,14 @@ class CrudRepository {
     const response = await this.model.destroy({
       where: { id: data },
     });
+
+    if (!response) {
+      throw new AppError(
+        "The Given Id 'Flight' is not found.",
+        StatusCodes.NOT_FOUND
+      );
+    }
+
     return response;
   }
 

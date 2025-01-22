@@ -48,8 +48,18 @@ const getAirplane = async (id) => {
   }
 };
 
+const deleteAirplane = async (id) => {
+  try {
+    const response = await airplaneRepository.destroy(id);
+    return response;
+  } catch (error) {
+    throw new AppError("The requested flight is not found", error.statusCode);
+  }
+};
+
 module.exports = {
   createAirplane,
   getAirplanes,
   getAirplane,
+  deleteAirplane,
 };
