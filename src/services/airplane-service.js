@@ -33,7 +33,23 @@ const getAirplanes = async () => {
   }
 };
 
+const getAirplane = async (id) => {
+  try {
+    const airplane = await airplaneRepository.get(id);
+    return airplane;
+  } catch (error) {
+    if (error.statusCode == StatusCodes.NOT_FOUND) {
+      throw new AppError(
+        "The Requested Flight is Not Found!",
+        error.statusCode
+      );
+    }
+    throw new AppError(error.name, StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+};
+
 module.exports = {
   createAirplane,
   getAirplanes,
+  getAirplane,
 };
