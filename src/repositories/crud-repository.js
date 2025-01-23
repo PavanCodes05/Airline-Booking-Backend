@@ -41,12 +41,17 @@ class CrudRepository {
   }
 
   async update(id, data) {
-    const response = await this.model.update(data, {
+    const [response] = await this.model.update(data, {
       where: {
         id: id,
       },
     });
-    return response;
+
+    if (response == 0) {
+      throw new AppError("Not found", StatusCodes.NOT_FOUND);
+    }
+
+    return await this.model.findByPk(id);
   }
 }
 module.exports = CrudRepository;

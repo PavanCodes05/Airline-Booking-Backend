@@ -57,9 +57,22 @@ const deleteAirplane = async (id) => {
   }
 };
 
+const updateAirplane = async (id, data) => {
+  try {
+    const airplane = await airplaneRepository.update(id, data);
+    return airplane;
+  } catch (error) {
+    throw new AppError(
+      "The requested flight for updating is not found",
+      StatusCodes.NOT_FOUND
+    );
+  }
+};
+
 module.exports = {
   createAirplane,
   getAirplanes,
   getAirplane,
   deleteAirplane,
+  updateAirplane,
 };
